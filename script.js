@@ -100,10 +100,21 @@ document.getElementById("btnConnectWallet").addEventListener("click", connectBlo
 
 document.getElementById("formPublishCert").addEventListener("submit", async (e) => {
     e.preventDefault();
+
+    // --- MULAI PERUBAHAN: Validasi CID ---
+    const cidPinata = document.getElementById("txtCID").value.trim();
+
+    // Validasi: Harus diawali "Qm" dan panjang tepat 46 karakter
+    if (!cidPinata.startsWith("Qm") || cidPinata.length !== 46) {
+        alert("Gagal: Format IPFS CID tidak valid!\nPastikan diawali dengan 'Qm' dan panjangnya 46 karakter.");
+        return; // Menghentikan fungsi agar tidak lanjut ke proses blockchain
+    }
+    // --- SELESAI PERUBAHAN ---
+
     const namaMhs = document.getElementById("txtNama").value;
     const namaKegiatan = document.getElementById("txtKegiatan").value;
     const namaPenerbit = document.getElementById("txtPenerbit").value;
-    const cidPinata = document.getElementById("txtCID").value; 
+
     await handleIssueCertificate("inputFileSertifikat", namaMhs, namaKegiatan, namaPenerbit, cidPinata);
 });
 

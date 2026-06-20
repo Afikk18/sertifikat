@@ -1,0 +1,49 @@
+{
+  "_format": "hh3-sol-build-info-1",
+  "id": "solc-0_8_24-75a583b35b0ae163e89091ec7e4895758ad78fbc",
+  "solcVersion": "0.8.24",
+  "solcLongVersion": "0.8.24+commit.e11b9ed9",
+  "compilerType": "solc",
+  "toolVersions": {
+    "hardhat": "3.9.0"
+  },
+  "userSourceNameMap": {
+    "contracts/CertificateVerification.sol": "project/contracts/CertificateVerification.sol"
+  },
+  "input": {
+    "language": "Solidity",
+    "settings": {
+      "evmVersion": "shanghai",
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "outputSelection": {
+        "*": {
+          "": [
+            "ast"
+          ],
+          "*": [
+            "abi",
+            "evm.bytecode.linkReferences",
+            "evm.bytecode.object",
+            "evm.bytecode.opcodes",
+            "evm.bytecode.sourceMap",
+            "evm.deployedBytecode.immutableReferences",
+            "evm.deployedBytecode.linkReferences",
+            "evm.deployedBytecode.object",
+            "evm.deployedBytecode.opcodes",
+            "evm.deployedBytecode.sourceMap",
+            "evm.methodIdentifiers"
+          ]
+        }
+      },
+      "remappings": []
+    },
+    "sources": {
+      "project/contracts/CertificateVerification.sol": {
+        "content": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.24;\r\n\r\ncontract CertificateVerification {\r\n    struct Certificate {\r\n        string candidateName;\r\n        string courseName;\r\n        string issuer;\r\n        string ipfsCID;      // Menampung CID dari IPFS untuk file fisik PDF sertifikat\r\n        uint256 issueDate;\r\n        bool isValid;\r\n    }\r\n\r\n    // Mapping dari hash sertifikat (SHA-256) ke data struktur sertifikat\r\n    mapping(bytes32 => Certificate) public certificates;\r\n    \r\n    address public owner;\r\n\r\n    modifier onlyOwner() {\r\n        require(msg.sender == owner, \"Hanya pemilik kontrak yang dapat menjalankan ini\");\r\n        _;\r\n    }\r\n\r\n    constructor() {\r\n        owner = msg.sender;\r\n    }\r\n\r\n    // 1. Fungsi untuk mendaftarkan/menerbitkan sertifikat baru ke Blockchain beserta IPFS CID\r\n    function issueCertificate(\r\n        bytes32 _certHash,\r\n        string memory _name,\r\n        string memory _course,\r\n        string memory _issuer,\r\n        string memory _ipfsCID\r\n    ) public onlyOwner {\r\n        require(!certificates[_certHash].isValid, \"Sertifikat sudah terdaftar\");\r\n        \r\n        certificates[_certHash] = Certificate({\r\n            candidateName: _name,\r\n            courseName: _course,\r\n            issuer: _issuer,\r\n            ipfsCID: _ipfsCID,\r\n            issueDate: block.timestamp,\r\n            isValid: true\r\n        });\r\n    }\r\n\r\n    // 2. Fungsi untuk memverifikasi keaslian sertifikat melalui hash unik (Akses Publik)\r\n    function verifyCertificate(bytes32 _certHash) public view returns (\r\n        bool isValid,\r\n        string memory candidateName,\r\n        string memory courseName,\r\n        string memory issuer,\r\n        string memory ipfsCID,\r\n        uint256 issueDate\r\n    ) {\r\n        Certificate memory cert = certificates[_certHash];\r\n        require(cert.issueDate != 0, \"Sertifikat tidak ditemukan\");\r\n        return (cert.isValid, cert.candidateName, cert.courseName, cert.issuer, cert.ipfsCID, cert.issueDate);\r\n    }\r\n\r\n    // 3. Fungsi untuk mencabut validitas sertifikat yang bermasalah (Hanya Admin/Owner)\r\n    function revokeCertificate(bytes32 _certHash) public onlyOwner {\r\n        require(certificates[_certHash].issueDate != 0, \"Sertifikat tidak ditemukan\");\r\n        require(certificates[_certHash].isValid, \"Sertifikat sudah tidak aktif\");\r\n        \r\n        certificates[_certHash].isValid = false;\r\n    }\r\n}"
+      }
+    }
+  }
+}
