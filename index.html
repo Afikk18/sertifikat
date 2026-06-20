@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Verifikasi Sertifikat Blockchain</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans p-6">
+
+    <div class="max-w-4xl mx-auto space-y-6">
+        
+        <div class="bg-white p-6 rounded-lg shadow-md flex justify-between items-center">
+            <div>
+                <h1 class="text-2xl font-bold text-gray-800">Panel Sertifikat Digital</h1>
+                <p class="text-sm text-gray-500">Infrastruktur Web3 berbasis Jaringan Sepolia (Testnet)</p>
+            </div>
+            <button id="btnConnectWallet" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded transition">
+                Hubungkan MetaMask
+            </button>
+        </div>
+
+        <div class="bg-white p-6 rounded-lg shadow-md">
+            <h2 class="text-xl font-semibold mb-4 text-gray-700 border-b pb-2">1. Penerbitan Sertifikat Baru</h2>
+            <form id="formPublishCert" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-600">Nama Mahasiswa</label>
+                    <input type="text" id="txtNama" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-600">Nama Kegiatan</label>
+                    <input type="text" id="txtKegiatan" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-600">Nama Penerbit</label>
+                    <input type="text" id="txtPenerbit" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-600">IPFS CID</label>
+                    <input type="text" id="txtCID" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border" placeholder="Qm..." required>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-600">File Sertifikat</label>
+                    <input type="file" id="inputFileSertifikat" class="mt-1 block w-full text-sm text-gray-500" required>
+                </div>
+                <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded transition">
+                    Daftarkan Ke Jaringan Blockchain
+                </button>
+            </form>
+        </div>
+
+        <div class="bg-white p-6 rounded-lg shadow-md">
+            <h2 class="text-xl font-semibold mb-4 text-gray-700 border-b pb-2">2. Verifikasi Keaslian Sertifikat</h2>
+            <div class="space-y-4">
+                <input type="file" id="inputFileCheck" class="mt-1 block w-full text-sm text-gray-500" required>
+                <button id="btnCheckValidation" class="w-full bg-teal-600 hover:bg-teal-700 text-white font-semibold py-2 px-4 rounded transition">
+                    Validasi Keaslian Berkas
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
