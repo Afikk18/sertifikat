@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CertiBlock - Verifikasi Sertifikat Web3</title>
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Poppins -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Poppins', sans-serif; }
@@ -19,12 +17,10 @@
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
 
-    <!-- Navbar / Header -->
     <nav class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
                 <div class="flex items-center gap-3">
-                    <!-- Ikon Logo -->
                     <div class="bg-indigo-600 p-2 rounded-lg">
                         <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
@@ -43,15 +39,11 @@
         </div>
     </nav>
 
-    <!-- Konten Utama -->
     <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
         
-        <!-- Grid Atas: Penerbitan (Kiri) & Verifikasi (Kanan) -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
             
-            <!-- KOLOM KIRI: Penerbitan Sertifikat (Mengambil ruang lebih lebar) -->
             <div class="lg:col-span-7 bg-white p-8 rounded-2xl shadow-sm border border-slate-100 relative overflow-hidden">
-                <!-- Aksen visual (hiasan sudut) -->
                 <div class="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-indigo-50 rounded-full blur-2xl opacity-70"></div>
                 
                 <h2 class="text-xl font-bold mb-6 text-slate-800 flex items-center gap-2">
@@ -75,8 +67,8 @@
                         <input type="text" id="txtPenerbit" class="w-full rounded-lg bg-slate-50 border border-slate-200 p-3 text-sm focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all outline-none" placeholder="Cth: Universitas Halu Oleo" required>
                     </div>
                     <div>
-                        <label class="block text-sm font-semibold text-slate-600 mb-1">IPFS CID (Hash Gambar)</label>
-                        <input type="text" id="txtCID" class="w-full rounded-lg bg-slate-50 border border-slate-200 p-3 text-sm font-mono text-indigo-600 focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all outline-none" placeholder="Qm..." required>
+                        <label class="block text-sm font-semibold text-slate-600 mb-1">IPFS CID (Terisi Otomatis)</label>
+                        <input type="text" id="txtCID" class="w-full rounded-lg bg-slate-100 border border-slate-200 p-3 text-sm font-mono text-slate-500 cursor-not-allowed focus:outline-none" placeholder="Membuat hash setelah gambar divalidasi..." readonly>
                     </div>
                     <div>
                         <label class="block text-sm font-semibold text-slate-600 mb-2">Unggah File Sertifikat</label>
@@ -88,10 +80,8 @@
                 </form>
             </div>
 
-            <!-- KOLOM KANAN: Verifikasi Sertifikat -->
             <div class="lg:col-span-5 flex flex-col gap-6">
                 
-                <!-- Box Upload Verifikasi -->
                 <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100">
                     <h2 class="text-xl font-bold mb-6 text-slate-800 flex items-center gap-2">
                         <svg class="w-5 h-5 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
@@ -106,9 +96,7 @@
                     </div>
                 </div>
 
-                <!-- Box Hasil Verifikasi (Muncul saat sukses) -->
                 <div id="kotakHasilVerifikasi" class="hidden bg-white p-1 rounded-2xl shadow-lg border-2 border-emerald-400 overflow-hidden relative">
-                    <!-- Pattern Background -->
                     <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#10b981_1px,transparent_1px)] [background-size:16px_16px]"></div>
                     
                     <div class="relative bg-emerald-50 rounded-xl p-6 text-center z-10 h-full">
@@ -119,8 +107,7 @@
                         <p class="text-xs text-emerald-600 mb-4 font-medium uppercase tracking-wider">Terverifikasi On-Chain</p>
                         
                         <div id="teksDetailSertifikat" class="text-sm text-slate-700 mb-5 text-left p-4 bg-white rounded-lg border border-emerald-100 shadow-sm leading-relaxed">
-                            <!-- Data akan dimuat dari JS -->
-                        </div>
+                            </div>
                         
                         <p class="text-xs text-slate-500 mb-2 font-semibold">Pratinjau Asli dari IPFS:</p>
                         <img id="gambarSertifikat" src="" alt="Pratinjau Sertifikat" class="w-full h-auto object-contain rounded-lg border border-slate-200 shadow-sm max-h-48 bg-white p-1">
@@ -130,7 +117,6 @@
             </div>
         </div>
 
-        <!-- BAGIAN BAWAH: Galeri -->
         <div class="mt-8 bg-white p-8 rounded-2xl shadow-sm border border-slate-100">
             <div class="flex justify-between items-end mb-6">
                 <div>
@@ -143,12 +129,10 @@
             </div>
             
             <div id="galeriSertifikat" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                <!-- Daftar Gambar akan dimuat ke sini oleh JavaScript -->
-            </div>
+                </div>
         </div>
     </main>
 
-    <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
     <script src="script.js"></script>
