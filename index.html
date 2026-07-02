@@ -3,65 +3,154 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistem Verifikasi Sertifikat Blockchain</title>
+    <title>CertiBlock - Verifikasi Sertifikat Web3</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Poppins', sans-serif; }
+        /* Kustomisasi scrollbar untuk kesan modern */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    </style>
 </head>
-<body class="bg-gray-100 font-sans p-6">
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
 
-    <div class="max-w-4xl mx-auto space-y-6">
+    <!-- Navbar / Header -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center gap-3">
+                    <!-- Ikon Logo -->
+                    <div class="bg-indigo-600 p-2 rounded-lg">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h1 class="font-bold text-xl tracking-tight text-slate-900">Certi<span class="text-indigo-600">Block</span></h1>
+                        <p class="text-xs text-slate-500 -mt-1 font-medium">Jaringan Sepolia Testnet</p>
+                    </div>
+                </div>
+                <button id="btnConnectWallet" class="flex items-center gap-2 bg-indigo-60px hover:bg-indigo-700 bg-indigo-600 text-white text-sm font-semibold py-2 px-5 rounded-full transition-all transform hover:scale-105 shadow-md">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
+                    Hubungkan MetaMask
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Konten Utama -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
         
-        <div class="bg-white p-6 rounded-lg shadow-md flex justify-between items-center">
-            <div>
-                <h1 class="text-2xl font-bold text-gray-800">Panel Sertifikat Digital</h1>
-                <p class="text-sm text-gray-500">Infrastruktur Web3 berbasis Jaringan Sepolia (Testnet)</p>
+        <!-- Grid Atas: Penerbitan (Kiri) & Verifikasi (Kanan) -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            
+            <!-- KOLOM KIRI: Penerbitan Sertifikat (Mengambil ruang lebih lebar) -->
+            <div class="lg:col-span-7 bg-white p-8 rounded-2xl shadow-sm border border-slate-100 relative overflow-hidden">
+                <!-- Aksen visual (hiasan sudut) -->
+                <div class="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-indigo-50 rounded-full blur-2xl opacity-70"></div>
+                
+                <h2 class="text-xl font-bold mb-6 text-slate-800 flex items-center gap-2">
+                    <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                    1. Penerbitan Sertifikat Baru
+                </h2>
+                
+                <form id="formPublishCert" class="space-y-5 relative z-10">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-600 mb-1">Nama Mahasiswa</label>
+                            <input type="text" id="txtNama" class="w-full rounded-lg bg-slate-50 border border-slate-200 p-3 text-sm focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all outline-none" placeholder="Cth: Al Mustakfi" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-600 mb-1">Nama Kegiatan</label>
+                            <input type="text" id="txtKegiatan" class="w-full rounded-lg bg-slate-50 border border-slate-200 p-3 text-sm focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all outline-none" placeholder="Cth: Seminar Nasional" required>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-600 mb-1">Penerbit (Instansi/Organisasi)</label>
+                        <input type="text" id="txtPenerbit" class="w-full rounded-lg bg-slate-50 border border-slate-200 p-3 text-sm focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all outline-none" placeholder="Cth: Universitas Halu Oleo" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-600 mb-1">IPFS CID (Hash Gambar)</label>
+                        <input type="text" id="txtCID" class="w-full rounded-lg bg-slate-50 border border-slate-200 p-3 text-sm font-mono text-indigo-600 focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all outline-none" placeholder="Qm..." required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-600 mb-2">Unggah File Sertifikat</label>
+                        <input type="file" id="inputFileSertifikat" accept="image/png, image/jpeg" class="block w-full text-sm text-slate-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 cursor-pointer border border-dashed border-slate-300 rounded-lg p-2" required>
+                    </div>
+                    <button type="submit" class="w-full mt-2 bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-700 hover:to-blue-700 text-white font-bold py-3.5 px-4 rounded-xl transition-all transform hover:-translate-y-1 shadow-lg hover:shadow-indigo-500/30">
+                        Daftarkan Ke Jaringan Blockchain
+                    </button>
+                </form>
             </div>
-            <button id="btnConnectWallet" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded transition">
-                Hubungkan MetaMask
-            </button>
-        </div>
 
-        <div class="bg-white p-6 rounded-lg shadow-md">
-            <h2 class="text-xl font-semibold mb-4 text-gray-700 border-b pb-2">1. Penerbitan Sertifikat Baru</h2>
-            <form id="formPublishCert" class="space-y-4">
-                <div>
-                    <label class="block text-sm font-medium text-gray-600">Nama Mahasiswa</label>
-                    <input type="text" id="txtNama" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border" required>
+            <!-- KOLOM KANAN: Verifikasi Sertifikat -->
+            <div class="lg:col-span-5 flex flex-col gap-6">
+                
+                <!-- Box Upload Verifikasi -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100">
+                    <h2 class="text-xl font-bold mb-6 text-slate-800 flex items-center gap-2">
+                        <svg class="w-5 h-5 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        2. Verifikasi Keaslian
+                    </h2>
+                    <div class="space-y-5">
+                        <p class="text-sm text-slate-500">Unggah sertifikat yang ingin dicek validitasnya di jaringan blockchain.</p>
+                        <input type="file" id="inputFileCheck" class="block w-full text-sm text-slate-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-teal-50 file:text-teal-700 hover:file:bg-teal-100 cursor-pointer border border-dashed border-slate-300 rounded-lg p-2" required>
+                        <button id="btnCheckValidation" class="w-full bg-teal-600 hover:bg-teal-700 text-white font-bold py-3.5 px-4 rounded-xl transition-all shadow-md hover:shadow-teal-500/30">
+                            Validasi Dokumen
+                        </button>
+                    </div>
                 </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-600">Nama Kegiatan</label>
-                    <input type="text" id="txtKegiatan" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border" required>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-600">Nama Penerbit</label>
-                    <input type="text" id="txtPenerbit" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border" required>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-600">IPFS CID</label>
-                    <!-- ID ini yang akan kita validasi di script.js -->
-                    <input type="text" id="txtCID" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border" placeholder="Qm..." required>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-600">File Sertifikat</label>
-                    <input type="file" id="inputFileSertifikat" class="mt-1 block w-full text-sm text-gray-500" required>
-                </div>
-                <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded transition">
-                    Daftarkan Ke Jaringan Blockchain
-                </button>
-            </form>
-        </div>
 
-        <div class="bg-white p-6 rounded-lg shadow-md">
-            <h2 class="text-xl font-semibold mb-4 text-gray-700 border-b pb-2">2. Verifikasi Keaslian Sertifikat</h2>
-            <div class="space-y-4">
-                <input type="file" id="inputFileCheck" class="mt-1 block w-full text-sm text-gray-500" required>
-                <button id="btnCheckValidation" class="w-full bg-teal-600 hover:bg-teal-700 text-white font-semibold py-2 px-4 rounded transition">
-                    Validasi Keaslian Berkas
-                </button>
+                <!-- Box Hasil Verifikasi (Muncul saat sukses) -->
+                <div id="kotakHasilVerifikasi" class="hidden bg-white p-1 rounded-2xl shadow-lg border-2 border-emerald-400 overflow-hidden relative">
+                    <!-- Pattern Background -->
+                    <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#10b981_1px,transparent_1px)] [background-size:16px_16px]"></div>
+                    
+                    <div class="relative bg-emerald-50 rounded-xl p-6 text-center z-10 h-full">
+                        <div class="inline-flex items-center justify-center w-12 h-12 bg-emerald-100 rounded-full mb-3">
+                            <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        </div>
+                        <h3 class="font-bold text-emerald-800 text-lg tracking-wide">SERTIFIKAT VALID</h3>
+                        <p class="text-xs text-emerald-600 mb-4 font-medium uppercase tracking-wider">Terverifikasi On-Chain</p>
+                        
+                        <div id="teksDetailSertifikat" class="text-sm text-slate-700 mb-5 text-left p-4 bg-white rounded-lg border border-emerald-100 shadow-sm leading-relaxed">
+                            <!-- Data akan dimuat dari JS -->
+                        </div>
+                        
+                        <p class="text-xs text-slate-500 mb-2 font-semibold">Pratinjau Asli dari IPFS:</p>
+                        <img id="gambarSertifikat" src="" alt="Pratinjau Sertifikat" class="w-full h-auto object-contain rounded-lg border border-slate-200 shadow-sm max-h-48 bg-white p-1">
+                    </div>
+                </div>
+
             </div>
         </div>
-    </div>
 
+        <!-- BAGIAN BAWAH: Galeri -->
+        <div class="mt-8 bg-white p-8 rounded-2xl shadow-sm border border-slate-100">
+            <div class="flex justify-between items-end mb-6">
+                <div>
+                    <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                        <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                        3. Galeri Sertifikat Terdaftar
+                    </h2>
+                    <p class="text-sm text-slate-500 mt-1">Sertifikat yang berhasil di-minting melalui perangkat ini (Off-Chain Indexer).</p>
+                </div>
+            </div>
+            
+            <div id="galeriSertifikat" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <!-- Daftar Gambar akan dimuat ke sini oleh JavaScript -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
