@@ -1,5 +1,6 @@
-// 1. Konfigurasi Kontrak (Alamat Sepolia yang sudah di-deploy)
-const contractAddress = "0xe750f9922ebb0eb33ecac10f3fbb006ce6a6d28f";
+// // 1. Konfigurasi Kontrak (Ubah baris 2 menjadi seperti di bawah ini)
+const contractAddressOld = "0xe750f9922ebb0eb33ecac10f3fbb006ce6a6d28f"; // Kontrak Pertama
+const contractAddressNew = "0x1234567890abcdef1234567890abcdef12345678"; // Masukkan alamat kontrak kedua di sini
 
 const contractABI = [
     "function issueCertificate(bytes32 _certHash, string memory _name, string memory _course, string memory _issuer, string memory _ipfsCID) public",
@@ -18,10 +19,25 @@ async function connectBlockchain() {
             
             const provider = new ethers.providers.Web3Provider(window.ethereum);
             signer = provider.getSigner();
-            contract = new ethers.Contract(contractAddress, contractABI, signer);
             
+            // 1. Ambil alamat wallet user terlebih dahulu
             const userAddress = await signer.getAddress();
             console.log("Terhubung ke MetaMask:", userAddress);
+            
+            // 2. Tentukan contract address secara dinamis berdasarkan wallet
+            let activeContractAddress;
+            
+            // Cek apakah yang login adalah akun1 (0x81b74...)
+            if (userAddress.toLowerCase() === "0x81b744ce342c862e0d188c6d6ddbd6815bb74934".toLowerCase()) {
+                activeContractAddress = contractAddressNew;
+                console.log("Menggunakan Kontrak Baru (akun1)");
+            } else {
+                activeContractAddress = contractAddressOld;
+                console.log("Menggunakan Kontrak Lama");
+            }
+            
+            // 3. Buat objek kontrak menggunakan alamat yang aktif
+            contract = new ethers.Contract(activeContractAddress, contractABI, signer);
             
             // Penyesuaian warna tombol dengan desain modern (Indigo ke Emerald)
             const btnConnect = document.getElementById("btnConnectWallet");
